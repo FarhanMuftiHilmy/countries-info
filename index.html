@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelompok 10 TRPL 2019</title>
+
+<!-- Boostrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+<!-- Internal CSS -->
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body class="container">    
+
+<!-- Main Menu -->
+<div id="container1">    
+    
+    <div class="content">
+
+        <!-- Header -->
+        <h2>Country Info</h2>
+        <p>Kelompok 10 TRPL 2019</p>
+
+        <!-- Input -->
+        <div class="input-group flex-nowrap">
+            <input name="country_name" id="country_name" type="tel" class="form-control"
+                placeholder="Input country name" aria-label="Username" aria-describedby="addon-wrapping">
+            <button id="button" type="button" class="btn btn-outline-primary">Search</button>
+        </div>
+
+
+
+        <br><br>
+
+        <div id="countries"></div>
+        
+    </div>
+
+
+</div>
+
+
+
+<!-- Script API NEGARA-->
+<script>
+    document.getElementById('button').addEventListener('click', loadCountries);
+
+    
+
+    function loadCountries() {
+        var xhr = new XMLHttpRequest();
+        var name = document.getElementById('country_name').value
+        xhr.open('GET', 'https://restcountries.eu/rest/v2/name/' + name, true);
+        console.log(name);
+
+        xhr.onload = function () {
+            if (this.status == 200) {
+                var countries = JSON.parse(this.responseText);
+
+                var output = ""
+
+                for (var i in countries) {
+                    output +=
+                        '<div class="countries">' +
+                            '<img src="' + countries[i].flag + '" width="100vh" height="vw">' +
+                            '<ul class="list-group">' +
+                                '<li class ="list-group-item"><span>Name</span>: ' + countries[i].name + '</li>' +
+                                '<li class ="list-group-item"><span>Capital</span>: ' + countries[i].capital + '</li>' +
+                                '<li class ="list-group-item"><span>Region</span>: ' + countries[i].region + '</li>' +
+                                '<li class ="list-group-item"><span>Subregion</span>: ' + countries[i].subregion + '</li>' +
+                                '<li class ="list-group-item"><span>Population</span>: ' + countries[i].population + '</li>' +
+                                '<li class ="list-group-item"><span>Currency</span>: ' + countries[i].currencies[0].name + '</li>' +
+                                '<li class ="list-group-item"><span>Language</span>: ' + countries[i].languages[0].name + '</li>' +
+                                '<li class ="list-group-item"><span>Latitude</span>: ' + countries[i].latlng[0] + '</a></li>' +
+                                '<li class ="list-group-item"><span>Longitude</span>: ' + countries[i].latlng[1] + '</a></li>' +
+                            '</ul>' +
+                            '<a id="button2" type="button" class="btn btn-outline-primary" href="http://maps.google.com/?q=' + countries[i].name + '" target="_blank">Get Location</a>' +
+                        '</div>';
+                        
+                        
+                }
+                document.getElementById('countries').innerHTML = output;
+                
+            } else{
+                // document.getElementsByClassName('content').innerHTML = "<h1>Hello WOrld<h1>";
+                document.getElementById('countries').innerHTML = '<div class="alert alert-danger" role="alert">Country\'s name is invalid! Try Again</div>';
+            }
+        }
+
+        xhr.send();
+
+
+       
+    }
+
+    
+
+    
+</script>
+
+    <!-- Script API BERITA INTERNASIONAL-->
+
+
+<!-- Script Animasi -->
+<script type="text/javascript">
+    var container = document.getElementById('container1');
+    window.onmousemove = function (e) {
+        var x = - e.clientX / 5,
+            y = - e.clientY / 5;
+
+        container.style.backgroundPositionX = x + 'px';
+        container.style.backgroundPositionY = y + 'px';
+    }
+
+</script>
+
+
+</body>
+
+</html>
