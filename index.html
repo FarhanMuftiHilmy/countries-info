@@ -29,7 +29,7 @@
         <!-- Input -->
         <div class="input-group flex-nowrap">
             <input name="country_name" id="country_name" type="tel" class="form-control"
-                placeholder="Input country name" aria-label="Username" aria-describedby="addon-wrapping">
+                placeholder="Input country name" aria-label="Username" aria-describedby="addon-wrapping" inputmode="search">
             <button id="button" type="button" class="btn btn-outline-primary">Search</button>
         </div>
 
@@ -50,20 +50,14 @@
 <script>
     document.getElementById('button').addEventListener('click', loadCountries);
 
-    
-
     function loadCountries() {
         var xhr = new XMLHttpRequest();
         var name = document.getElementById('country_name').value
         xhr.open('GET', 'https://restcountries.eu/rest/v2/name/' + name, true);
-        console.log(name);
-
         xhr.onload = function () {
             if (this.status == 200) {
                 var countries = JSON.parse(this.responseText);
-
-                var output = ""
-
+                var output = "";
                 for (var i in countries) {
                     output +=
                         '<div class="countries">' +
@@ -81,21 +75,14 @@
                             '</ul>' +
                             '<a id="button2" type="button" class="btn btn-outline-primary" href="http://maps.google.com/?q=' + countries[i].name + '" target="_blank">Get Location</a>' +
                         '</div>';
-                        
-                        
                 }
                 document.getElementById('countries').innerHTML = output;
-                
             } else{
                 // document.getElementsByClassName('content').innerHTML = "<h1>Hello WOrld<h1>";
                 document.getElementById('countries').innerHTML = '<div class="alert alert-danger" role="alert">Country\'s name is invalid! Try Again</div>';
             }
         }
-
-        xhr.send();
-
-
-       
+        xhr.send();       
     }
 
     
